@@ -1,8 +1,14 @@
 from flask import Flask, redirect, url_for,Response, render_template, request
-from login.login import login #import blueprint fromseprate folder
+from login.extension import mongo
+import json
+from flask_pymongo import PyMongo 
 app=Flask(__name__)
-app.register_blueprint(login,url_prefix="/login") #register login file in main file 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+app.config['MONGO_DNAME']='udemy_collect'
+app.config['MONGO_URI']="mongodb+srv://test:test@cluster0-yro7g.mongodb.net/api_flask?retryWrites=true&w=majority"
+mongo.init_app(app) #already initialized in extension.py
+from login.login import login #import blueprint fromseprate folder
+app.register_blueprint(login,url_prefix="/login") #register login file in main file 
 
 @app.route("/",methods=["GET"])
 def home():
