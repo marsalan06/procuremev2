@@ -18,12 +18,42 @@ def all_data():
         output.append({"name":i['name'],"age":i['age']})
     return jsonify({"result":output})
 
+@login.route("/add",methods=['POST'])
+def add_data():
+    if request.method=="POST":
+        name=str(request.form['u_name'])
+        email=str(request.form['email'])
+        password=str(request.form['password'])
+        data=mongo.db.user_data
+        q=data.find_one({"email":email})
+        if q:
+            return "<h1> email already registered</h1>"
+        else:
+            entery_id=data.insert({'name':name,'email':email,'password':password})
+            get_data=data.find_one({"_id":entery_id})
+            r_name=get_data['name']
+            r_email=get_data['email']
+            output={'name':get_data['name'],'email':get_data['email']}#'password':get_data['password']}
+            result= "Welcome "+str(r_name) +", your email id: "+str(r_email)+" is registered."    
+            return render_template("welcome_page.html",content=result)
+    #return jsonify({'result':output})
+
 @login.route("/",methods=['GET','POST']) #name of module refrenced 
 def login_page():
     if request.method=="POST":
-        name=str(request.form["u_name"])
+        #name=str(request.form["u_name"])
         email=str(request.form["email"])
         password=str(request.form["password"])
-        return f"{name} {email} {password}"
-
-    return render_template("login.html")
+        data=mongo.db.user_data
+        q= data.find_one({"email":email})
+        if q:
+            if q['password'] == password:
+                r_name=q['name']
+                output="Welcome back "+str(r_name)+", you are logged in"
+                return output
+            else:
+                return "<h1> Wrong Password </h1>"
+        else:
+            return "<h1> Cant find you, Kindly sign up </h1>"    
+    else:
+        return render_template("login.html")

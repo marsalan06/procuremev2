@@ -8,15 +8,25 @@
     <body>
         <p>Welcome to Procure me ! </p>
         <p>This is Login Page of Procure me</p><br><br>
-        <form action="/login/" method="post" enctype="multipart/form-data">
+        <h1>Sign Up</h1>
+        <form action="/login/add" method="post" enctype="multipart/form-data">
             <label for="Name">Enter Name:</label><br>
             <input type="text" id="u_name" name="u_name" value="xyz"><br>
             <label for="email">Enter Email id:</label><br>
             <input type="email" id="email" name="email" value="xyz@yz.com"><br>
             <label for="password">Enter Pasword:</label><br>
             <input type="password" id="password" name="password"><br>
-            <p><input type ="submit" value="submit"/></p> </p>
+            <p><input type ="submit" value="submit"/></p>
         </form>
+        <h1>Login In</h1>
+        <form action="/login/" method="post" enctype="multipart/form-data">
+            <label for="email">Enter Email id:</label><br>
+            <input type="email" id="email" name="email" value="xyz@yz.com"><br>
+            <label for="password">Enter Pasword:</label><br>
+            <input type="password" id="password" name="password"><br>
+            <p><input name="Login" type ="submit" value="Login"/></p>
+        </form>
+
 
     </body>
 </html>

@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for,Response, render_template, request
 from login.extension import mongo
 import json
+from host import get_ip
 from flask_pymongo import PyMongo 
 app=Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -26,4 +27,5 @@ def after_request(response):
     return response
 
 if __name__=="__main__":
-    app.run(host="192.168.1.104",debug=True)
+    ip=get_ip()['ip']
+    app.run(host=ip,debug=True)
